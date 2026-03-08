@@ -122,8 +122,8 @@ const CardBack = ({ stats, imageUrl }: { stats: DinoStats; imageUrl?: string }) 
 const StatsCard = ({ label, value, sublabel }: { label: string; value: string | number; sublabel?: string }) => (
   <div className="flex flex-col gap-1 border border-white/10 p-4 bg-zinc-900/20 hover:bg-zinc-900/40 transition-colors group">
     <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest">{label}</span>
-    <span className="text-3xl font-londrina font-black text-white group-hover:scale-110 transition-transform origin-left">{value}</span>
-    {sublabel && <span className="font-mono text-[8px] text-zinc-600 uppercase mt-1">{sublabel}</span>}
+    <span className="text-2xl md:text-3xl font-londrina font-black text-white group-hover:scale-110 transition-transform origin-left">{value}</span>
+    {sublabel && <span className="font-mono text-[7px] md:text-[8px] text-zinc-600 uppercase mt-1 leading-tight">{sublabel}</span>}
   </div>
 );
 
@@ -354,7 +354,7 @@ const TreeItem = ({
         )}
         <button
           onClick={() => onSelect(node.name)}
-          className={`font-mono text-2xl py-2 px-4 rounded transition-all text-left uppercase tracking-[0.2em] break-words whitespace-normal max-w-[480px] ${
+          className={`font-mono text-xl md:text-2xl py-2 px-4 rounded transition-all text-left uppercase tracking-[0.2em] break-words whitespace-normal w-full md:max-w-[480px] ${
             isSelected 
               ? 'text-white bg-white/20' 
               : (isLeaf && isCollected ? 'text-white' : 'text-white/40 hover:text-white hover:bg-white/10')
@@ -623,17 +623,17 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="relative w-full min-h-screen flex flex-col items-center p-12 overflow-y-auto bg-black"
+            className="relative w-full min-h-screen flex flex-col items-center px-5 pt-5 pb-12 md:p-12 overflow-y-auto bg-black"
           >
             {/* Background Hand Icon Removed */}
 
             <div className="w-full max-w-[600px] flex flex-col items-start mt-4">
               <div className="space-y-2 mb-6">
-                <div className="flex items-center gap-2">
-                  <h1 className="text-8xl font-londrina font-black uppercase tracking-widest text-white">
+                <div className="flex items-center gap-1 md:gap-2">
+                  <h1 className="text-6xl md:text-8xl font-londrina font-black uppercase tracking-normal md:tracking-widest text-white">
                     dinodex
                   </h1>
-                  <img src={logo} alt="DinoDex Logo" className="w-[130px] h-auto object-contain" />
+                  <img src={logo} alt="DinoDex Logo" className="w-[90px] md:w-[130px] h-auto object-contain" />
                 </div>
               </div>
               {/* Search Box */}
@@ -686,12 +686,12 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="min-h-screen flex flex-col items-center p-12 bg-black overflow-y-auto"
+            className="min-h-screen flex flex-col items-center px-5 pt-5 pb-12 md:p-12 bg-black overflow-y-auto"
           >
             <div className="w-full max-w-[1200px] flex flex-col items-start mt-4">
               <div className="flex justify-between items-end w-full mb-12 border-b border-white/10 pb-8">
                 <div className="space-y-2">
-                  <h2 className="text-6xl font-londrina font-black uppercase tracking-tight text-white">
+                  <h2 className="text-4xl md:text-6xl font-londrina font-black uppercase tracking-normal md:tracking-widest text-white">
                     Collection
                   </h2>
                   <p className="font-mono text-[10px] text-zinc-500 uppercase tracking-[0.4em]">Repository Access v1.0.5</p>
@@ -752,11 +752,11 @@ export default function App() {
               </div>
 
               {collectedDinos.length === 0 ? (
-                <div className="w-full py-40 text-center border border-dashed border-white/5">
-                  <p className="font-mono text-zinc-800 uppercase tracking-[0.5em] text-xs">Repository Initialized. No data detected.</p>
+                <div className="w-full py-40 text-center border border-dashed border-white/5 mx-auto">
+                  <p className="font-mono text-zinc-800 uppercase tracking-[0.5em] text-xs px-4">Repository Initialized. No data detected.</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 w-full">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
                   {collectedDinos
                     .filter(d => !galleryTypeFilter || d.stats.energyType === galleryTypeFilter)
                     .map((dino, idx) => (
@@ -794,7 +794,7 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="min-h-screen w-full bg-zinc-950 p-12 overflow-y-auto"
+            className="min-h-screen w-full bg-zinc-950 px-5 py-12 md:p-12 overflow-y-auto"
           >
             <div className="max-w-[1400px] mx-auto">
               <div className="flex justify-between items-end mb-12 border-b border-white/10 pb-8">
@@ -910,12 +910,12 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="min-h-screen flex flex-col items-center p-12 bg-black"
+            className="min-h-screen flex flex-col items-center px-5 pt-5 pb-12 md:p-12 bg-black"
           >
             <div className="w-full max-w-[600px] flex flex-col items-start mt-4">
               {/* Header - Always visible in card view */}
               <div className="space-y-2 mb-6 cursor-pointer group" onClick={() => navigate('landing')}>
-                <h2 className="text-6xl font-londrina font-black uppercase tracking-widest text-white group-hover:text-zinc-400 transition-colors">
+                <h2 className="text-3xl md:text-6xl font-londrina font-black uppercase tracking-normal md:tracking-widest text-white group-hover:text-zinc-400 transition-colors">
                   {currentDinoName}
                 </h2>
                 <div className="h-1 w-12 bg-white group-hover:bg-zinc-400 transition-colors" />

@@ -1,0 +1,5 @@
+{
+  "name": "dinodex",
+  "description": "Generate unique, collectible baseball-style cards for any dinosaur using AI.",
+  "requestFramePermissions": []
+}

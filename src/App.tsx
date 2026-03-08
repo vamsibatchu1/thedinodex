@@ -127,6 +127,51 @@ const StatsCard = ({ label, value, sublabel }: { label: string; value: string | 
   </div>
 );
 
+const getDeterministicType = (n: string) => {
+  const types = ['Fighting', 'Water', 'Lightning', 'Grass', 'Psychic', 'Fire'];
+  const hash = n.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return types[hash % types.length];
+};
+
+const EggCard = ({ name, dino, onSelect }: { name: string; dino?: DinoCardData; onSelect: (name: string) => void }) => {
+  const energyType = dino?.stats.energyType || getDeterministicType(name);
+  const eggImage = `/assets/eggs/${energyType.toLowerCase()}-egg.png`;
+  
+  return (
+    <motion.div 
+      whileHover={{ y: -5, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={() => onSelect(name)}
+      className="bg-black p-4 flex flex-col items-center gap-4 cursor-pointer group transition-all"
+    >
+      <div className="w-full aspect-square bg-black flex items-center justify-center p-4 relative overflow-hidden">
+        <motion.img 
+          initial={{ scale: 0.9 }}
+          animate={{ 
+            scale: [0.9, 1, 0.9],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          src={eggImage} 
+          alt={`${energyType} Egg`}
+          className="w-full h-full object-contain transition-all z-10"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+          }}
+        />
+      </div>
+      <div className="text-center w-full px-2 overflow-hidden">
+        <h3 className="font-londrina text-xl text-white uppercase tracking-widest truncate">{name}</h3>
+        <p className="font-mono text-[9px] text-zinc-400 uppercase tracking-widest mt-1 font-bold">{energyType}</p>
+        <p className="font-mono text-[8px] text-zinc-600 uppercase tracking-widest mt-0.5">Dormant Specimen</p>
+      </div>
+    </motion.div>
+  );
+};
+
 const AdminCard: React.FC<{ name: string; dino?: DinoCardData; onSuccess: (updated: DinoCardData) => void }> = ({ name, dino, onSuccess }) => {
   const [loading, setLoading] = useState(false);
   const [currentImg, setCurrentImg] = useState(dino?.imageUrl || '');
@@ -518,14 +563,12 @@ export default function App() {
     setTypingFinished(false);
 
     try {
-      // Step 0: Check pre-generated
       const preGen = preGeneratedCollection.find(d => 
         d.stats.name.toLowerCase() === searchTerm.toLowerCase() || 
         d.stats.scientificName.toLowerCase() === searchTerm.toLowerCase()
       );
 
       if (preGen) {
-        // Ensure properties exist due to manifest/interface differences
         const readyPreGen = {
           ...preGen,
           imageUrl: preGen.imageUrl || (preGen as any).frontImageUrl,
@@ -535,7 +578,6 @@ export default function App() {
         setCardData(readyPreGen);
         setLoading(false);
         
-        // ONLY trigger back-image generation if it's missing (async background task)
         if (!readyPreGen.backImageUrl) {
           (async () => {
              const refImages = ['dino1.png', 'dino2.png', 'dino3.png'];
@@ -545,7 +587,7 @@ export default function App() {
               const updatedCard = { ...readyPreGen, backImageUrl };
               setCardData(updatedCard);
               setCollectedDinos(prev => {
-                const filtered = prev.filter(d => d.stats.name !== updatedCard.stats.name);
+                const filtered = prev.filter(d => d.stats.name.toLowerCase() !== updatedCard.stats.name.toLowerCase());
                 return [updatedCard, ...filtered];
               });
             } catch (e) {
@@ -554,31 +596,26 @@ export default function App() {
           })();
         }
 
-        if (!collectedDinos.some(d => d.stats.name === readyPreGen.stats.name)) {
+        if (!collectedDinos.some(d => d.stats.name.toLowerCase() === readyPreGen.stats.name.toLowerCase())) {
           setCollectedDinos(prev => [readyPreGen, ...prev]);
         }
         return;
       }
 
-      // Step 1: Generate Stats (Fast)
       const stats = await generateDinoStats(searchTerm);
       setTempStats(stats);
       setGeneratingImage(true);
       
-      // Step 2: Pick a common reference image for both sides
       const refImages = ['dino1.png', 'dino2.png', 'dino3.png'];
       const commonRef = refImages[Math.floor(Math.random() * refImages.length)];
       
-      // Step 3: Generate Image (Fast) - Front Only
       const imageUrl = await generateDinoImage(stats, 'front', commonRef);
-      const backImageUrl = ""; // Back side uses data-sheet UI
+      const backImageUrl = ""; 
       
       const imageUrls = { stats, imageUrl, backImageUrl };
       setCardData(imageUrls);
-      setCollectedDinos(prev => {
-        if (prev.some(d => d.stats.name === stats.name)) return prev;
-        return [imageUrls, ...prev];
-      });
+      setCollectedDinos(prev => [imageUrls, ...prev]);
+      setPreGeneratedCollection(prev => [imageUrls, ...prev]);
     } catch (err: any) {
       console.error(err);
       setError("Failed to bring this dinosaur back to life. Please try again.");
@@ -661,16 +698,23 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Family Tree Container */}
-
-              <div className="w-full">
-                <DinoTree 
-                  onSelect={handleSearch} 
-                  selectedIndex={selectedIndex}
-                  allNames={ALL_DINO_NAMES}
-                  collectedDinos={collectedDinos}
-                  isKeyboardNavigating={isKeyboardNavigating}
-                />
+              {/* Egg Gallery Grid */}
+              <div className="w-full mt-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-20">
+                  {ALL_DINO_NAMES
+                    .filter(name => name.toLowerCase().includes(query.toLowerCase()))
+                    .map((name) => {
+                      const dino = preGeneratedCollection.find(d => d.stats.name.toLowerCase() === name.toLowerCase());
+                      return (
+                        <EggCard 
+                          key={name}
+                          name={name}
+                          dino={dino}
+                          onSelect={handleSearch}
+                        />
+                      );
+                  })}
+                </div>
               </div>
 
               {/* Footer */}
@@ -914,14 +958,23 @@ export default function App() {
           >
             <div className="w-full max-w-[600px] flex flex-col items-start mt-4">
               {/* Header - Always visible in card view */}
-              <div className="space-y-2 mb-6 cursor-pointer group" onClick={() => navigate('landing')}>
-                <h2 className="text-3xl md:text-6xl font-londrina font-black uppercase tracking-normal md:tracking-widest text-white group-hover:text-zinc-400 transition-colors">
-                  {currentDinoName}
-                </h2>
-                <div className="h-1 w-12 bg-white group-hover:bg-zinc-400 transition-colors" />
-                <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity">
-                  Click to return
-                </p>
+              <div className="flex items-center gap-4 md:gap-8 mb-6 cursor-pointer group" onClick={() => navigate('landing')}>
+                <motion.img 
+                  key={`header-egg-${currentDinoName}`}
+                  initial={{ opacity: 0, x: -20, scale: 0.8 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  src={`/assets/eggs/${(tempStats?.energyType || getDeterministicType(currentDinoName)).toLowerCase()}-egg.png`}
+                  className="w-16 h-16 md:w-24 md:h-24 object-contain"
+                />
+                <div className="space-y-2">
+                  <h2 className="text-3xl md:text-6xl font-londrina font-black uppercase tracking-normal md:tracking-widest text-white group-hover:text-zinc-400 transition-colors">
+                    {currentDinoName}
+                  </h2>
+                  <div className="h-1 w-12 bg-white group-hover:bg-zinc-400 transition-colors" />
+                  <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity">
+                    Click to return
+                  </p>
+                </div>
               </div>
 
               <div className="w-full">

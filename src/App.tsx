@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'motion/react';
 import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
-import { Search, RotateCw, Info, MapPin, Scale, Ruler, Utensils, Calendar, Sparkles, Key, AlertCircle, ArrowRight, X, ChevronDown, LogOut } from 'lucide-react';
+import { Search, RotateCw, Info, MapPin, Scale, Ruler, Utensils, Calendar, Sparkles, Key, AlertCircle, ArrowRight, X, ChevronDown, LogOut, ArrowLeft } from 'lucide-react';
 import { DinoCardData, DinoStats } from './types';
 import dinoLocationsData from './data/dino_locations.json';
 import { generateDinoStats, generateDinoImage, checkApiKey, openApiKeyDialog } from './services/gemini';
@@ -343,32 +343,38 @@ const DinoMap = ({ activeDinoName, focusedDinoName, focusedDinoLocation, collect
 
         labelGroup.transition().duration(400).style("opacity", 1);
 
+        const labelText1 = focusedDinoLocation || "Discovery Site";
+        const labelText2 = `LOC: ${coords[1].toFixed(2)}, ${coords[0].toFixed(2)}`;
+        // Monospace character is ~0.6em wide. At 6px font, that's ~3.6px per char.
+        // We add padding and account for the 1px letter spacing on line 2.
+        const estimatedWidth = Math.max(labelText1.length * 3.8, labelText2.length * 4.8) + 12;
+
         labelGroup.append("rect")
-          .attr("x", -4)
-          .attr("y", -14)
-          .attr("width", 140)
-          .attr("height", 38)
+          .attr("x", 0)
+          .attr("y", -11)
+          .attr("width", estimatedWidth)
+          .attr("height", 24)
           .attr("fill", "white")
           .attr("stroke", "rgba(0,0,0,0.1)")
           .attr("stroke-width", 0.5);
 
         labelGroup.append("text")
-          .attr("x", 8)
-          .attr("y", 2)
+          .attr("x", 5)
+          .attr("y", -1)
           .attr("fill", "#000")
           .attr("font-family", "IBM Plex Mono")
-          .attr("font-size", "7px")
+          .attr("font-size", "6px")
           .attr("text-transform", "uppercase")
-          .text(focusedDinoLocation || "Discovery Site");
+          .text(labelText1);
 
         labelGroup.append("text")
-          .attr("x", 8)
-          .attr("y", 16)
+          .attr("x", 5)
+          .attr("y", 8)
           .attr("fill", "rgba(0,0,0,0.6)")
           .attr("font-family", "IBM Plex Mono")
-          .attr("font-size", "7px")
+          .attr("font-size", "6px")
           .attr("letter-spacing", "1px")
-          .text(`LOC: ${coords[1].toFixed(2)}, ${coords[0].toFixed(2)}`);
+          .text(labelText2);
       }
     });
 
@@ -759,7 +765,6 @@ export default function App() {
   const [isMapAnimating, setIsMapAnimating] = useState(false);
   const [targetDino, setTargetDino] = useState<string | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [isActionsOpen, setIsActionsOpen] = useState(false);
 
   // Real-time synchronization with Firebase collection
   useEffect(() => {
@@ -993,13 +998,15 @@ export default function App() {
                   </div>
                 </div>
 
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 mb-10 group cursor-pointer" onClick={handleLogout}>
-                  Welcome back {userData?.displayName?.split(' ')[0].toUpperCase() || 'VAMSI'}, ready to catch some dinos today?
-                  <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-white">[LOGOUT]</span>
-                </p>
+                <div className="mb-10 group cursor-pointer" onClick={handleLogout}>
+                  <p className="font-mono text-[12px] uppercase tracking-[0.25em] text-zinc-400 mb-1">
+                    Welcome back {userData?.displayName?.split(' ')[0].toUpperCase() || 'VAMSI'}, ready to catch some dinos today?
+                  </p>
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/60 hover:text-white transition-opacity underline underline-offset-4 decoration-white/20">Sign Out explorer</span>
+                </div>
                 
                 {/* Collection Chips */}
-                <div className="flex flex-wrap gap-4 mb-6">
+                <div className="flex gap-4 mb-6">
                   <button 
                     onClick={() => navigate('gallery')}
                     className="px-4 py-2 bg-white text-black font-mono text-xs uppercase tracking-widest hover:bg-zinc-200 transition-colors"
@@ -1008,38 +1015,6 @@ export default function App() {
                   </button>
                   <div className="px-4 py-2 border border-white/20 text-white/40 font-mono text-xs uppercase tracking-widest cursor-default">
                     {Math.max(0, 101 - collectedDinos.length)} to go
-                  </div>
-
-                  <div className="relative">
-                    <button 
-                      onClick={() => setIsActionsOpen(!isActionsOpen)}
-                      className="flex items-center gap-2 px-4 py-2 border border-white text-white font-mono text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all"
-                    >
-                      Actions
-                      <ChevronDown className={`w-3 h-3 transition-transform ${isActionsOpen ? 'rotate-180' : ''}`} />
-                    </button>
-
-                    <AnimatePresence>
-                      {isActionsOpen && (
-                        <motion.div 
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 10 }}
-                          className="absolute left-0 top-full mt-2 w-48 bg-black border border-white z-50 shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]"
-                        >
-                          <button 
-                            onClick={() => {
-                              setIsActionsOpen(false);
-                              handleLogout();
-                            }}
-                            className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-white hover:text-black transition-colors group"
-                          >
-                            <span className="font-mono text-[10px] uppercase tracking-widest">Logout</span>
-                            <LogOut className="w-3 h-3 opacity-50 group-hover:opacity-100" />
-                          </button>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </div>
                 </div>
 
@@ -1121,18 +1096,17 @@ export default function App() {
           >
             <div className="w-full max-w-[1200px] flex flex-col items-start mt-4">
               <div className="flex justify-between items-end w-full mb-12 border-b border-white/10 pb-8">
-                <div className="space-y-2">
-                  <h2 className="text-4xl md:text-6xl font-londrina font-black uppercase tracking-normal md:tracking-widest text-white">
-                    Collection
+                <div className="flex items-center gap-4 md:gap-8">
+                  <button 
+                    onClick={() => navigate('landing')}
+                    className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center border border-white/10 hover:border-white text-zinc-500 hover:text-white transition-all group"
+                  >
+                    <ArrowLeft className="w-6 h-6 md:w-8 md:h-8 group-hover:-translate-x-1 transition-transform" />
+                  </button>
+                  <h2 className="text-4xl md:text-6xl font-londrina font-black uppercase tracking-tight md:tracking-widest text-white leading-tight">
+                    {userData?.displayName?.split(' ')[0].toUpperCase() || 'VAMSI'}'S Collection
                   </h2>
-                  <p className="font-mono text-[10px] text-zinc-500 uppercase tracking-[0.4em]">Repository Access v1.0.5</p>
                 </div>
-                <button 
-                  onClick={() => navigate('landing')}
-                  className="font-mono text-xs uppercase tracking-widest text-zinc-400 hover:text-white transition-colors px-6 py-3 border border-white/5 hover:border-white/20"
-                >
-                  [ Disconnect ]
-                </button>
               </div>
 
               {/* Stats Section */}

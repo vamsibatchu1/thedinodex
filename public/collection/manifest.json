@@ -29,7 +29,7 @@
       "discoveryYear": "1905"
     },
     "frontImageUrl": "/collection/tyrannosaurus-rex-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/tyrannosaurus-rex-back.png"
   },
   {
     "stats": {
@@ -61,7 +61,7 @@
       "discoveryYear": "1889"
     },
     "frontImageUrl": "/collection/triceratops-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/triceratops-back.png"
   },
   {
     "stats": {
@@ -98,7 +98,7 @@
       "discoveryYear": "1903"
     },
     "frontImageUrl": "/collection/brachiosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/brachiosaurus-back.png"
   },
   {
     "stats": {
@@ -130,7 +130,7 @@
       "discoveryYear": "1923"
     },
     "frontImageUrl": "/collection/velociraptor-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/velociraptor-back.png"
   },
   {
     "stats": {
@@ -167,7 +167,7 @@
       "discoveryYear": "1906"
     },
     "frontImageUrl": "/collection/ankylosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/ankylosaurus-back.png"
   },
   {
     "stats": {
@@ -204,7 +204,7 @@
       "discoveryYear": "1915"
     },
     "frontImageUrl": "/collection/spinosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/spinosaurus-back.png"
   },
   {
     "stats": {
@@ -241,7 +241,7 @@
       "discoveryYear": "1876"
     },
     "frontImageUrl": "/collection/pteranodon-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/pteranodon-back.png"
   },
   {
     "stats": {
@@ -278,7 +278,7 @@
       "discoveryYear": "1922"
     },
     "frontImageUrl": "/collection/parasaurolophus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/parasaurolophus-back.png"
   },
   {
     "stats": {
@@ -315,7 +315,7 @@
       "discoveryYear": "1877"
     },
     "frontImageUrl": "/collection/allosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/allosaurus-back.png"
   },
   {
     "stats": {
@@ -352,7 +352,7 @@
       "discoveryYear": "1877"
     },
     "frontImageUrl": "/collection/apatosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/apatosaurus-back.png"
   },
   {
     "stats": {
@@ -389,7 +389,7 @@
       "discoveryYear": "1825"
     },
     "frontImageUrl": "/collection/iguanodon-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/iguanodon-back.png"
   },
   {
     "stats": {
@@ -429,7 +429,7 @@
       "discoveryYear": "1985"
     },
     "frontImageUrl": "/collection/carnotaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/carnotaurus-back.png"
   },
   {
     "stats": {
@@ -461,7 +461,7 @@
       "discoveryYear": "1942"
     },
     "frontImageUrl": "/collection/dilophosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/dilophosaurus-back.png"
   },
   {
     "stats": {
@@ -493,7 +493,7 @@
       "discoveryYear": "1859"
     },
     "frontImageUrl": "/collection/compsognathus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/compsognathus-back.png"
   },
   {
     "stats": {
@@ -525,7 +525,7 @@
       "discoveryYear": "1972"
     },
     "imageUrl": "/collection/gallimimus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/gallimimus-back.png"
   },
   {
     "stats": {
@@ -562,7 +562,7 @@
       "discoveryYear": "1764"
     },
     "imageUrl": "/collection/mosasaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/mosasaurus-back.png"
   },
   {
     "stats": {
@@ -599,7 +599,7 @@
       "discoveryYear": "1859"
     },
     "frontImageUrl": "/collection/pachycephalosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/pachycephalosaurus-back.png"
   },
   {
     "stats": {
@@ -636,7 +636,7 @@
       "discoveryYear": "1983"
     },
     "frontImageUrl": "/collection/baryonyx-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/baryonyx-back.png"
   },
   {
     "stats": {
@@ -668,7 +668,7 @@
       "discoveryYear": "1964"
     },
     "frontImageUrl": "/collection/deinonychus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/deinonychus-back.png"
   },
   {
     "stats": {
@@ -705,7 +705,7 @@
       "discoveryYear": "1878"
     },
     "frontImageUrl": "/collection/diplodocus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/diplodocus-back.png"
   },
   {
     "stats": {
@@ -739,7 +739,7 @@
       "discoveryYear": "1993"
     },
     "frontImageUrl": "/collection/giganotosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/giganotosaurus-back.png"
   },
   {
     "stats": {
@@ -776,7 +776,7 @@
       "discoveryYear": "1837"
     },
     "imageUrl": "/collection/plateosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/plateosaurus-back.png"
   },
   {
     "stats": {
@@ -808,7 +808,7 @@
       "discoveryYear": "1861"
     },
     "frontImageUrl": "/collection/archaeopteryx-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/archaeopteryx-back.png"
   },
   {
     "stats": {
@@ -845,7 +845,7 @@
       "discoveryYear": "1915"
     },
     "frontImageUrl": "/collection/kentrosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/kentrosaurus-back.png"
   },
   {
     "stats": {
@@ -882,7 +882,7 @@
       "discoveryYear": "1978"
     },
     "frontImageUrl": "/collection/maiasaura-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/maiasaura-back.png"
   },
   {
     "stats": {
@@ -922,7 +922,7 @@
       "discoveryYear": "1923"
     },
     "frontImageUrl": "/collection/oviraptor-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/oviraptor-back.png"
   },
   {
     "stats": {
@@ -954,7 +954,7 @@
       "discoveryYear": "1913"
     },
     "frontImageUrl": "/collection/styracosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/styracosaurus-back.png"
   },
   {
     "stats": {
@@ -991,7 +991,7 @@
       "discoveryYear": "1891"
     },
     "frontImageUrl": "/collection/torosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/torosaurus-back.png"
   },
   {
     "stats": {
@@ -1023,7 +1023,7 @@
       "discoveryYear": "1997"
     },
     "frontImageUrl": "/collection/suchomimus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/suchomimus-back.png"
   },
   {
     "stats": {
@@ -1062,7 +1062,7 @@
       "discoveryYear": "1940"
     },
     "imageUrl": "/collection/acrocanthosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/acrocanthosaurus-back.png"
   },
   {
     "stats": {
@@ -1094,7 +1094,7 @@
       "discoveryYear": "1927"
     },
     "imageUrl": "/collection/carcharodontosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/carcharodontosaurus-back.png"
   },
   {
     "stats": {
@@ -1126,7 +1126,7 @@
       "discoveryYear": "1923"
     },
     "imageUrl": "/collection/metriacanthosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/metriacanthosaurus-back.png"
   },
   {
     "stats": {
@@ -1200,7 +1200,7 @@
       "discoveryYear": "1955"
     },
     "frontImageUrl": "/collection/tarbosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/tarbosaurus-back.png"
   },
   {
     "stats": {
@@ -1232,7 +1232,7 @@
       "discoveryYear": "1980"
     },
     "frontImageUrl": "/collection/saltasaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/saltasaurus-back.png"
   },
   {
     "stats": {
@@ -1264,7 +1264,7 @@
       "discoveryYear": "1991"
     },
     "frontImageUrl": "/collection/amargasaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/amargasaurus-back.png"
   },
   {
     "stats": {
@@ -1301,7 +1301,7 @@
       "discoveryYear": "1913"
     },
     "frontImageUrl": "/collection/pachyrhinosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/pachyrhinosaurus-back.png"
   },
   {
     "stats": {
@@ -1338,7 +1338,7 @@
       "discoveryYear": "1898"
     },
     "imageUrl": "/collection/chasmosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/chasmosaurus-back.png"
   },
   {
     "stats": {
@@ -1375,7 +1375,7 @@
       "discoveryYear": "1977"
     },
     "frontImageUrl": "/collection/saichania-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/saichania-back.png"
   },
   {
     "stats": {
@@ -1407,7 +1407,7 @@
       "discoveryYear": "1998"
     },
     "imageUrl": "/collection/gastonia-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/gastonia-back.png"
   },
   {
     "stats": {
@@ -1439,7 +1439,7 @@
       "discoveryYear": "1964"
     },
     "imageUrl": "/collection/minmi-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/minmi-back.png"
   },
   {
     "stats": {
@@ -1476,7 +1476,7 @@
       "discoveryYear": "1923"
     },
     "frontImageUrl": "/collection/lambeosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/lambeosaurus-back.png"
   },
   {
     "stats": {
@@ -1510,7 +1510,7 @@
       "discoveryYear": "1973"
     },
     "frontImageUrl": "/collection/shantungosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/shantungosaurus-back.png"
   },
   {
     "stats": {
@@ -1547,7 +1547,7 @@
       "discoveryYear": "1973"
     },
     "frontImageUrl": "/collection/wuerhosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/wuerhosaurus-back.png"
   },
   {
     "stats": {
@@ -1579,7 +1579,7 @@
       "discoveryYear": "1824"
     },
     "imageUrl": "/collection/megalosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/megalosaurus-back.png"
   },
   {
     "stats": {
@@ -1648,7 +1648,7 @@
       "discoveryYear": "1889"
     },
     "frontImageUrl": "/collection/coelophysis-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/coelophysis-back.png"
   },
   {
     "stats": {
@@ -1680,7 +1680,7 @@
       "discoveryYear": "1991"
     },
     "frontImageUrl": "/collection/cryolophosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/cryolophosaurus-back.png"
   },
   {
     "stats": {
@@ -1717,7 +1717,7 @@
       "discoveryYear": "1970"
     },
     "frontImageUrl": "/collection/daspletosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/daspletosaurus-back.png"
   },
   {
     "stats": {
@@ -1754,7 +1754,7 @@
       "discoveryYear": "1902"
     },
     "frontImageUrl": "/collection/euoplocephalus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/euoplocephalus-back.png"
   },
   {
     "stats": {
@@ -1786,7 +1786,7 @@
       "discoveryYear": "1913"
     },
     "frontImageUrl": "/collection/gorgosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/gorgosaurus-back.png"
   },
   {
     "stats": {
@@ -1826,7 +1826,7 @@
       "discoveryYear": "1858"
     },
     "frontImageUrl": "/collection/hadrosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/hadrosaurus-back.png"
   },
   {
     "stats": {
@@ -1858,7 +1858,7 @@
       "discoveryYear": "1963"
     },
     "imageUrl": "/collection/herrerasaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/herrerasaurus-back.png"
   },
   {
     "stats": {
@@ -1890,7 +1890,7 @@
       "discoveryYear": "1996"
     },
     "frontImageUrl": "/collection/irritator-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/irritator-back.png"
   },
   {
     "stats": {
@@ -1922,7 +1922,7 @@
       "discoveryYear": "2010"
     },
     "frontImageUrl": "/collection/kulindadromeus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/kulindadromeus-back.png"
   },
   {
     "stats": {
@@ -1959,7 +1959,7 @@
       "discoveryYear": "1896"
     },
     "frontImageUrl": "/collection/majungasaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/majungasaurus-back.png"
   },
   {
     "stats": {
@@ -1988,7 +1988,7 @@
       "discoveryYear": "1954"
     },
     "frontImageUrl": "/collection/mamenchisaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/mamenchisaurus-back.png"
   },
   {
     "stats": {
@@ -3180,7 +3180,7 @@
       "discoveryYear": "1877"
     },
     "imageUrl": "/collection/stegosaurus-front.png",
-    "backImageUrl": ""
+    "backImageUrl": "/collection/stegosaurus-back.png"
   },
   {
     "stats": {

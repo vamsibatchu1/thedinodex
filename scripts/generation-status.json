@@ -1,0 +1,502 @@
+{
+  "Tyrannosaurus Rex": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Triceratops": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Stegosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Brachiosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Velociraptor": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Ankylosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Spinosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Pteranodon": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Parasaurolophus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Allosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Apatosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Iguanodon": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Carnotaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Dilophosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Compsognathus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Gallimimus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Mosasaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Pachycephalosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Baryonyx": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Deinonychus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Diplodocus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Giganotosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Plateosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Archaeopteryx": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Kentrosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Ouranosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Maiasaura": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Oviraptor": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Styracosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Torosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Suchomimus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Acrocanthosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Carcharodontosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Metriacanthosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Albertosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Tarbosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Saltasaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Shunosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Amargasaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Pachyrhinosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Chasmosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Saichania": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Edmontosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Gastonia": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Minmi": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Lambeosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Shantungosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Wuerhosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Megalosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Ceratosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Coelophysis": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Cryolophosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Daspletosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Dreadnoughtus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Einiosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Euoplocephalus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Gorgosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Hadrosaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Herrerasaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Irritator": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Kulindadromeus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Majungasaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Mamenchisaurus": {
+    "front": true,
+    "back": true,
+    "stats": true
+  },
+  "Microraptor": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Nodosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Ornithomimus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Pentaceratops": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Protoceratops": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Rajasaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Saurolophus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Sinoceratops": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Therizinosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Titanosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Troodon": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Utahraptor": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Zuniceratops": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Dicraeosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Eoraptor": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Futabasaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Gondwanatitan": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Guanlong": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Hypsilophodon": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Lexovisaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Linhenykus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Monoclonius": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Nemegtosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Opisthocoelicaudia": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Ornitholestes": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Patagosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Polacanthus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Psittacosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Pyroraptor": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Qianzhousaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Scansoriopteryx": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Sinosauropteryx": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Suzhousaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Yangchuanosaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Yutyrannus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Abelisaurus": {
+    "front": true,
+    "back": false,
+    "stats": true
+  },
+  "Sauroposeidon": {
+    "front": true,
+    "back": false,
+    "stats": true
+  }
+}

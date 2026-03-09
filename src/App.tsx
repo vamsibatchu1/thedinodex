@@ -191,7 +191,7 @@ const getDeterministicType = (n: string) => {
 
 const EggCard = ({ name, dino, onSelect, onHover, isCollected }: { key?: string; name: string; dino?: DinoCardData; onSelect: (name: string) => void; onHover?: (name: string | null) => void; isCollected?: boolean }) => {
   const energyType = dino?.stats.energyType || getDeterministicType(name);
-  const eggImage = `/assets/eggs/${energyType.toLowerCase()}-egg.png`;
+  const eggImage = `/assets/eggs/${energyType.toLowerCase()}-egg.webp`;
   
   return (
     <motion.div 
@@ -1324,7 +1324,7 @@ export default function App() {
                   key={`header-egg-${currentDinoName}`}
                   initial={{ opacity: 0, x: -20, scale: 0.8 }}
                   animate={{ opacity: 1, x: 0, scale: 1 }}
-                  src={`/assets/eggs/${(tempStats?.energyType || getDeterministicType(currentDinoName)).toLowerCase()}-egg.png`}
+                  src={`/assets/eggs/${(tempStats?.energyType || getDeterministicType(currentDinoName)).toLowerCase()}-egg.webp`}
                   className="w-16 h-16 md:w-24 md:h-24 object-contain"
                 />
                 <div className="space-y-2">

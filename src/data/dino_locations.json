@@ -1,0 +1,386 @@
+{
+  "Tyrannosaurus Rex": {
+    "lat": 45,
+    "lng": -106
+  },
+  "Velociraptor": {
+    "lat": 43.7,
+    "lng": 103.5
+  },
+  "Spinosaurus": {
+    "lat": 30.9,
+    "lng": 29.8
+  },
+  "Allosaurus": {
+    "lat": 39.3,
+    "lng": -110.1
+  },
+  "Carnotaurus": {
+    "lat": -45.5,
+    "lng": -69.5
+  },
+  "Dilophosaurus": {
+    "lat": 36.9,
+    "lng": -111.4
+  },
+  "Compsognathus": {
+    "lat": 48.9,
+    "lng": 11.2
+  },
+  "Gallimimus": {
+    "lat": 43.7,
+    "lng": 103.5
+  },
+  "Baryonyx": {
+    "lat": 51.1,
+    "lng": -0.4
+  },
+  "Deinonychus": {
+    "lat": 39.7,
+    "lng": -108.5
+  },
+  "Giganotosaurus": {
+    "lat": -38,
+    "lng": -68
+  },
+  "Archaeopteryx": {
+    "lat": 48.9,
+    "lng": 11.2
+  },
+  "Acrocanthosaurus": {
+    "lat": 34,
+    "lng": -95.5
+  },
+  "Carcharodontosaurus": {
+    "lat": 30.9,
+    "lng": 29.8
+  },
+  "Metriacanthosaurus": {
+    "lat": 52.6,
+    "lng": -1.3
+  },
+  "Albertosaurus": {
+    "lat": 51.5,
+    "lng": -112.5
+  },
+  "Tarbosaurus": {
+    "lat": 43.7,
+    "lng": 103.5
+  },
+  "Megalosaurus": {
+    "lat": 51.8,
+    "lng": -1.3
+  },
+  "Ceratosaurus": {
+    "lat": 39.3,
+    "lng": -110.1
+  },
+  "Coelophysis": {
+    "lat": 36.2,
+    "lng": -106.8
+  },
+  "Cryolophosaurus": {
+    "lat": -85.1,
+    "lng": 169.1
+  },
+  "Daspletosaurus": {
+    "lat": 51.5,
+    "lng": -112.5
+  },
+  "Gorgosaurus": {
+    "lat": 51.5,
+    "lng": -112.5
+  },
+  "Herrerasaurus": {
+    "lat": -29.2,
+    "lng": -67.9
+  },
+  "Irritator": {
+    "lat": -7.3,
+    "lng": -39.3
+  },
+  "Majungasaurus": {
+    "lat": -16,
+    "lng": 46
+  },
+  "Microraptor": {
+    "lat": 41.6,
+    "lng": 120.4
+  },
+  "Ornithomimus": {
+    "lat": 51.5,
+    "lng": -112.5
+  },
+  "Rajasaurus": {
+    "lat": 23,
+    "lng": 73
+  },
+  "Troodon": {
+    "lat": 48,
+    "lng": -112
+  },
+  "Utahraptor": {
+    "lat": 39.2,
+    "lng": -110.2
+  },
+  "Guanlong": {
+    "lat": 44.4,
+    "lng": 89.6
+  },
+  "Ornitholestes": {
+    "lat": 42.8,
+    "lng": -107.5
+  },
+  "Pyroraptor": {
+    "lat": 43.7,
+    "lng": 5.9
+  },
+  "Qianzhousaurus": {
+    "lat": 25.8,
+    "lng": 114.9
+  },
+  "Sinosauropteryx": {
+    "lat": 41.6,
+    "lng": 120.4
+  },
+  "Yangchuanosaurus": {
+    "lat": 30.7,
+    "lng": 103.8
+  },
+  "Yutyrannus": {
+    "lat": 41.6,
+    "lng": 120.4
+  },
+  "Abelisaurus": {
+    "lat": -38,
+    "lng": -68
+  },
+  "Brachiosaurus": {
+    "lat": 39.3,
+    "lng": -110.1
+  },
+  "Apatosaurus": {
+    "lat": 41.6,
+    "lng": -105.5
+  },
+  "Diplodocus": {
+    "lat": 41.6,
+    "lng": -105.5
+  },
+  "Plateosaurus": {
+    "lat": 48.6,
+    "lng": 9.2
+  },
+  "Saltasaurus": {
+    "lat": -24.8,
+    "lng": -65.4
+  },
+  "Shunosaurus": {
+    "lat": 30.7,
+    "lng": 103.8
+  },
+  "Amargasaurus": {
+    "lat": -33.1,
+    "lng": -67.1
+  },
+  "Shantungosaurus": {
+    "lat": 36.7,
+    "lng": 119.1
+  },
+  "Dreadnoughtus": {
+    "lat": -50.2,
+    "lng": -72.2
+  },
+  "Mamenchisaurus": {
+    "lat": 30.7,
+    "lng": 103.8
+  },
+  "Titanosaurus": {
+    "lat": 23,
+    "lng": 73
+  },
+  "Dicraeosaurus": {
+    "lat": -9.6,
+    "lng": 39.6
+  },
+  "Gondwanatitan": {
+    "lat": -22.5,
+    "lng": -52.5
+  },
+  "Nemegtosaurus": {
+    "lat": 43.5,
+    "lng": 101
+  },
+  "Opisthocoelicaudia": {
+    "lat": 43.5,
+    "lng": 101
+  },
+  "Patagosaurus": {
+    "lat": -43.2,
+    "lng": -65.3
+  },
+  "Sauroposeidon": {
+    "lat": 34.5,
+    "lng": -97.5
+  },
+  "Stegosaurus": {
+    "lat": 41.6,
+    "lng": -105.5
+  },
+  "Ankylosaurus": {
+    "lat": 45,
+    "lng": -106
+  },
+  "Kentrosaurus": {
+    "lat": -9.6,
+    "lng": 39.6
+  },
+  "Saichania": {
+    "lat": 43.5,
+    "lng": 101
+  },
+  "Gastonia": {
+    "lat": 39.2,
+    "lng": -110.2
+  },
+  "Minmi": {
+    "lat": -26.5,
+    "lng": 148.6
+  },
+  "Wuerhosaurus": {
+    "lat": 46,
+    "lng": 85.5
+  },
+  "Euoplocephalus": {
+    "lat": 51.5,
+    "lng": -112.5
+  },
+  "Lexovisaurus": {
+    "lat": 49.2,
+    "lng": -0.5
+  },
+  "Polacanthus": {
+    "lat": 50.6,
+    "lng": -1.3
+  },
+  "Nodosaurus": {
+    "lat": 39.3,
+    "lng": -110.1
+  },
+  "Triceratops": {
+    "lat": 45,
+    "lng": -106
+  },
+  "Pachycephalosaurus": {
+    "lat": 45,
+    "lng": -106
+  },
+  "Styracosaurus": {
+    "lat": 51.5,
+    "lng": -112.5
+  },
+  "Torosaurus": {
+    "lat": 45,
+    "lng": -106
+  },
+  "Pachyrhinosaurus": {
+    "lat": 55.2,
+    "lng": -119.5
+  },
+  "Chasmosaurus": {
+    "lat": 51.5,
+    "lng": -112.5
+  },
+  "Pentaceratops": {
+    "lat": 36.5,
+    "lng": -108
+  },
+  "Protoceratops": {
+    "lat": 43.7,
+    "lng": 103.5
+  },
+  "Sinoceratops": {
+    "lat": 36.7,
+    "lng": 119.1
+  },
+  "Zuniceratops": {
+    "lat": 34.8,
+    "lng": -108.8
+  },
+  "Monoclonius": {
+    "lat": 51.5,
+    "lng": -112.5
+  },
+  "Psittacosaurus": {
+    "lat": 41.6,
+    "lng": 120.4
+  },
+  "Parasaurolophus": {
+    "lat": 36.5,
+    "lng": -108
+  },
+  "Iguanodon": {
+    "lat": 50.6,
+    "lng": 2.7
+  },
+  "Ouranosaurus": {
+    "lat": 17.5,
+    "lng": 8.5
+  },
+  "Maiasaura": {
+    "lat": 48,
+    "lng": -112
+  },
+  "Oviraptor": {
+    "lat": 43.7,
+    "lng": 103.5
+  },
+  "Edmontosaurus": {
+    "lat": 51.5,
+    "lng": -112.5
+  },
+  "Lambeosaurus": {
+    "lat": 51.5,
+    "lng": -112.5
+  },
+  "Hadrosaurus": {
+    "lat": 39.8,
+    "lng": -74.6
+  },
+  "Kulindadromeus": {
+    "lat": 51.1,
+    "lng": 118.8
+  },
+  "Saurolophus": {
+    "lat": 43.7,
+    "lng": 103.5
+  },
+  "Hypsilophodon": {
+    "lat": 50.6,
+    "lng": -1.3
+  },
+  "Linhenykus": {
+    "lat": 40.8,
+    "lng": 107
+  },
+  "Scansoriopteryx": {
+    "lat": 41.6,
+    "lng": 120.4
+  },
+  "Suzhousaurus": {
+    "lat": 39.7,
+    "lng": 98.5
+  },
+  "Mosasaurus": {
+    "lat": 50.8,
+    "lng": 5.7
+  },
+  "Pteranodon": {
+    "lat": 38.8,
+    "lng": -100
+  },
+  "Futabasaurus": {
+    "lat": 37,
+    "lng": 140
+  }
+}

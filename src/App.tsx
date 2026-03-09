@@ -1,10 +1,66 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, RotateCw, Info, MapPin, Scale, Ruler, Utensils, Calendar, Sparkles, Key, AlertCircle, ArrowRight, X } from 'lucide-react';
+import * as d3 from 'd3';
+import * as topojson from 'topojson-client';
+import { Search, RotateCw, Info, MapPin, Scale, Ruler, Utensils, Calendar, Sparkles, Key, AlertCircle, ArrowRight, X, ChevronDown, LogOut } from 'lucide-react';
 import { DinoCardData, DinoStats } from './types';
+import dinoLocationsData from './data/dino_locations.json';
 import { generateDinoStats, generateDinoImage, checkApiKey, openApiKeyDialog } from './services/gemini';
+import { signInWithGoogle, subscribeToUserData, collectSpecimen, logoutUser, UserData } from './services/firebase';
 
 // --- Components ---
+
+const GoogleIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.64 9.20455C17.64 8.56636 17.5827 7.95273 17.4764 7.36364H9V10.845H13.8436C13.635 11.97 13.0009 12.9232 12.0477 13.5614V15.8195H14.9564C16.6582 14.2527 17.64 11.9455 17.64 9.20455Z" fill="#4285F4"/>
+    <path d="M9 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5614C11.2418 14.1014 10.2109 14.4205 9 14.4205C6.65591 14.4205 4.67182 12.8373 3.96409 10.71H0.957273V13.0418C2.43818 15.9832 5.48182 18 9 18Z" fill="#34A853"/>
+    <path d="M3.96409 10.71C3.78409 10.17 3.68182 9.59318 3.68182 9C3.68182 8.40682 3.78409 7.83 3.96409 7.29V4.95818H0.957273C0.347727 6.17318 0 7.54773 0 9C0 10.4523 0.347727 11.8268 0.957273 13.0418L3.96409 10.71Z" fill="#FBBC05"/>
+    <path d="M9 3.57955C10.3214 3.57955 11.5077 4.03364 12.4405 4.92545L15.0218 2.34409C13.4632 0.891818 11.4259 0 9 0C5.48182 0 2.43818 2.01682 0.957273 4.95818L3.96409 7.29C4.67182 5.16273 6.65591 3.57955 9 3.57955Z" fill="#EA4335"/>
+  </svg>
+);
+
+const AuthPage = ({ onLogin, logo }: { key?: string; onLogin: () => void; logo: string }) => {
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black flex flex-col items-center justify-center p-6"
+    >
+      <div className="flex flex-col items-center gap-8 text-center max-w-sm w-full">
+        <div className="space-y-4">
+          <h1 className="text-8xl md:text-9xl font-londrina font-black uppercase tracking-tight text-white m-0 leading-none">
+            dinodex
+          </h1>
+          <div className="w-full flex justify-center">
+             <img src={logo} alt="DinoDex Large Logo" className="w-[200px] md:w-[300px] h-auto object-contain" />
+          </div>
+        </div>
+
+        <p className="font-mono text-xs uppercase tracking-[0.4em] text-zinc-500 font-bold mb-4">
+          got to catch them all
+        </p>
+
+        <div className="w-full space-y-4">
+          <button 
+            onClick={onLogin}
+            className="group w-full h-[64px] bg-white hover:bg-zinc-200 text-black flex items-center justify-center gap-4 transition-all active:scale-[0.98]"
+          >
+            <GoogleIcon />
+            <span className="font-mono text-sm font-black uppercase tracking-widest">Login with Google</span>
+          </button>
+
+          <button 
+            onClick={onLogin}
+            className="w-full h-[64px] border-2 border-white/20 hover:border-white text-white flex items-center justify-center transition-all active:scale-[0.98]"
+          >
+            <span className="font-mono text-sm font-black uppercase tracking-widest">Sign Up</span>
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 const Typewriter = ({ text, speed = 20, onComplete }: { text: string; speed?: number; onComplete?: () => void }) => {
   const [displayedText, setDisplayedText] = useState('');
@@ -133,7 +189,7 @@ const getDeterministicType = (n: string) => {
   return types[hash % types.length];
 };
 
-const EggCard = ({ name, dino, onSelect }: { name: string; dino?: DinoCardData; onSelect: (name: string) => void }) => {
+const EggCard = ({ name, dino, onSelect, onHover, isCollected }: { key?: string; name: string; dino?: DinoCardData; onSelect: (name: string) => void; onHover?: (name: string | null) => void; isCollected?: boolean }) => {
   const energyType = dino?.stats.energyType || getDeterministicType(name);
   const eggImage = `/assets/eggs/${energyType.toLowerCase()}-egg.png`;
   
@@ -141,6 +197,8 @@ const EggCard = ({ name, dino, onSelect }: { name: string; dino?: DinoCardData; 
     <motion.div 
       whileHover={{ y: -5, scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
+      onMouseEnter={() => onHover && onHover(name)}
+      onMouseLeave={() => onHover && onHover(null)}
       onClick={() => onSelect(name)}
       className="bg-black p-4 flex flex-col items-center gap-4 cursor-pointer group transition-all"
     >
@@ -164,11 +222,204 @@ const EggCard = ({ name, dino, onSelect }: { name: string; dino?: DinoCardData; 
         />
       </div>
       <div className="text-center w-full px-2 overflow-hidden">
-        <h3 className="font-londrina text-xl text-white uppercase tracking-widest truncate">{name}</h3>
+        <div className="flex items-center justify-center gap-2">
+          <h3 className="font-londrina text-xl text-white uppercase tracking-widest truncate">{name}</h3>
+          {isCollected && (
+            <motion.div 
+              animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-2 h-2 rounded-full bg-[#22c55e] shadow-[0_0_8px_#22c55e]"
+            />
+          )}
+        </div>
         <p className="font-mono text-[9px] text-zinc-400 uppercase tracking-widest mt-1 font-bold">{energyType}</p>
         <p className="font-mono text-[8px] text-zinc-600 uppercase tracking-widest mt-0.5">Dormant Specimen</p>
       </div>
     </motion.div>
+  );
+};
+
+const DinoMap = ({ activeDinoName, focusedDinoName, focusedDinoLocation, collectedNames, onMarkerClick, onFocusComplete }: { activeDinoName: string | null; focusedDinoName: string | null; focusedDinoLocation: string | null; collectedNames: Set<string>; onMarkerClick: (name: string) => void; onFocusComplete?: () => void }) => {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [worldData, setWorldData] = useState<any>(null);
+  const [isLabelVisible, setIsLabelVisible] = useState(false);
+
+  // Reset label visibility when focus changes
+  useEffect(() => {
+    if (focusedDinoName) setIsLabelVisible(false);
+  }, [focusedDinoName]);
+
+  const getDinoCoords = useCallback((name: string): [number, number] => {
+    const locations = dinoLocationsData as Record<string, { lat: number, lng: number }>;
+    const data = locations[name];
+    
+    if (data) {
+      return [data.lng, data.lat];
+    }
+
+    // Deterministic fallback for safety
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+        hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const lon = ((Math.abs(hash) % 360) - 180);
+    const lat = ((Math.abs(hash >> 8) % 120) - 60);
+    return [lon, lat];
+  }, []);
+
+  useEffect(() => {
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+      .then(res => res.json())
+      .then(data => setWorldData(data));
+  }, []);
+
+  useEffect(() => {
+    if (!worldData || !svgRef.current) return;
+
+    const svg = d3.select(svgRef.current);
+    const width = svgRef.current.clientWidth;
+    const height = svgRef.current.clientHeight;
+    
+    svg.selectAll("*").remove();
+
+    const projection = d3.geoNaturalEarth1()
+      .scale(width / 6)
+      .translate([width / 2, height / 2]);
+
+    const path = d3.geoPath().projection(projection);
+
+    const g = svg.append("g");
+
+    // Draw countries
+    g.append("path")
+      .datum(topojson.feature(worldData, worldData.objects.countries))
+      .attr("d", path as any)
+      .attr("fill", "#050505")
+      .attr("stroke", "rgba(255,255,255,0.3)")
+      .attr("stroke-width", 0.5);
+
+    // Dynamic dino markers
+    const markers = g.selectAll(".dino-marker")
+      .data(ALL_DINO_NAMES)
+      .enter()
+      .append("g")
+      .attr("class", "cursor-pointer group");
+
+    markers.each(function(name) {
+      const coords = getDinoCoords(name);
+      const [x, y] = projection(coords) || [0, 0];
+      const isActive = activeDinoName === name;
+      
+      const markerGroup = d3.select(this);
+      
+      if (isActive) {
+        markerGroup.append("circle")
+          .attr("cx", x)
+          .attr("cy", y)
+          .attr("r", 4)
+          .attr("fill", "white")
+          .style("filter", "blur(4px)")
+          .append("animate")
+          .attr("attributeName", "r")
+          .attr("values", "4;10;4")
+          .attr("dur", "2s")
+          .attr("repeatCount", "indefinite");
+      }
+
+      const isCollected = collectedNames.has(name.toLowerCase());
+
+      markerGroup.append("circle")
+        .attr("cx", x)
+        .attr("cy", y)
+        .attr("r", isActive ? 4 : 1.5)
+        .attr("fill", isActive ? "#fff" : (isCollected ? "#22c55e" : "rgba(255,255,255,0.2)"))
+        .on("click", () => onMarkerClick(name));
+
+      // Discovery Label
+      if (focusedDinoName === name && isLabelVisible) {
+        const labelGroup = markerGroup.append("g")
+          .attr("transform", `translate(${x + 10}, ${y - 10})`)
+          .style("opacity", 0);
+
+        labelGroup.transition().duration(400).style("opacity", 1);
+
+        labelGroup.append("rect")
+          .attr("x", -4)
+          .attr("y", -14)
+          .attr("width", 140)
+          .attr("height", 38)
+          .attr("fill", "white")
+          .attr("stroke", "rgba(0,0,0,0.1)")
+          .attr("stroke-width", 0.5);
+
+        labelGroup.append("text")
+          .attr("x", 8)
+          .attr("y", 2)
+          .attr("fill", "#000")
+          .attr("font-family", "IBM Plex Mono")
+          .attr("font-size", "7px")
+          .attr("text-transform", "uppercase")
+          .text(focusedDinoLocation || "Discovery Site");
+
+        labelGroup.append("text")
+          .attr("x", 8)
+          .attr("y", 16)
+          .attr("fill", "rgba(0,0,0,0.6)")
+          .attr("font-family", "IBM Plex Mono")
+          .attr("font-size", "7px")
+          .attr("letter-spacing", "1px")
+          .text(`LOC: ${coords[1].toFixed(2)}, ${coords[0].toFixed(2)}`);
+      }
+    });
+
+    const zoom = d3.zoom()
+      .scaleExtent([1, 12])
+      .on("zoom", (event) => {
+        g.attr("transform", event.transform);
+      });
+
+    svg.call(zoom as any);
+
+    // Kinetic Flight Logic
+    if (focusedDinoName) {
+      const coords = getDinoCoords(focusedDinoName);
+      const [x, y] = projection(coords) || [0, 0];
+      const scale = 5;
+
+      svg.transition()
+        .duration(1500)
+        .ease(d3.easeCubicInOut)
+        .call(
+          zoom.transform as any,
+          d3.zoomIdentity
+            .translate(width / 2, height / 2)
+            .scale(scale)
+            .translate(-x, -y)
+        )
+        .on("end", () => {
+          setIsLabelVisible(true);
+          setTimeout(() => {
+            if (onFocusComplete) onFocusComplete();
+            setIsLabelVisible(false);
+          }, 1500);
+        });
+    }
+
+  }, [worldData, activeDinoName, focusedDinoName, isLabelVisible, getDinoCoords, onMarkerClick, onFocusComplete, collectedNames]);
+
+  return (
+    <div className="w-full h-full relative border border-white/5 bg-black/50 overflow-hidden">
+      <svg ref={svgRef} className="w-full h-full" />
+      {activeDinoName && (
+        <div className="absolute bottom-4 left-4 z-10 bg-white/5 backdrop-blur-md border border-white/10 p-3 flex flex-col gap-1 pointer-events-none">
+          <span className="text-[7px] font-mono text-zinc-500 uppercase tracking-wider">Active Marker</span>
+          <span className="text-sm font-londrina text-white uppercase tracking-widest">{activeDinoName}</span>
+          <div className="flex gap-2 font-mono text-[6px] text-zinc-600 uppercase">
+             <span>LAT/LON: {getDinoCoords(activeDinoName)[1].toFixed(2)}, {getDinoCoords(activeDinoName)[0].toFixed(2)}</span>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -489,12 +740,13 @@ export default function App() {
   const [cardData, setCardData] = useState<DinoCardData | null>(null);
   const [tempStats, setTempStats] = useState<DinoStats | null>(null);
   const [isFlipped, setIsFlipped] = useState(false);
-  const [view, setView] = useState<'landing' | 'card' | 'gallery' | 'admin'>(() => {
+  const [view, setView] = useState<'auth' | 'landing' | 'card' | 'gallery' | 'admin'>(() => {
     const path = window.location.pathname.replace(/\/$/, '') || '/';
+    if (path === '/auth') return 'auth';
     if (path === '/admin') return 'admin';
     if (path === '/collection' || path === '/gallery') return 'gallery';
     if (path === '/card') return 'card';
-    return 'landing';
+    return 'auth'; // Default to auth
   });
   const [typingFinished, setTypingFinished] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -504,6 +756,28 @@ export default function App() {
   const [adminSearchTerm, setAdminSearchTerm] = useState('');
   const [adminTypeFilter, setAdminTypeFilter] = useState<string | null>(null);
   const [galleryTypeFilter, setGalleryTypeFilter] = useState<string | null>(null);
+  const [isMapAnimating, setIsMapAnimating] = useState(false);
+  const [targetDino, setTargetDino] = useState<string | null>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [isActionsOpen, setIsActionsOpen] = useState(false);
+
+  // Real-time synchronization with Firebase collection
+  useEffect(() => {
+    if (userData?.uid) {
+      const unsubscribe = subscribeToUserData(userData.uid, (data) => {
+        setUserData(data);
+        if (preGeneratedCollection.length > 0) {
+          const collectedNames = new Set(data.collectedSpecimens.map(s => s.toLowerCase()));
+          setCollectedDinos(preGeneratedCollection.filter(d => 
+            collectedNames.has(d.stats.name.toLowerCase())
+          ));
+        }
+      });
+      return () => unsubscribe();
+    } else {
+      setCollectedDinos([]); // Reset if not logged in
+    }
+  }, [userData?.uid, preGeneratedCollection]);
 
   // Sync state with URL
   useEffect(() => {
@@ -518,9 +792,30 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const navigate = (newView: 'landing' | 'card' | 'gallery' | 'admin') => {
+  const handleGoogleLogin = async () => {
+    try {
+      const data = await signInWithGoogle();
+      setUserData(data);
+      navigate('landing');
+    } catch (e) {
+      console.error("Login failed", e);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      setUserData(null);
+      setCollectedDinos([]);
+      navigate('auth');
+    } catch (e) {
+      console.error("Logout failed", e);
+    }
+  };
+
+  const navigate = (newView: 'auth' | 'landing' | 'card' | 'gallery' | 'admin') => {
     setView(newView);
-    const path = newView === 'landing' ? '/' : `/${newView}`;
+    const path = newView === 'auth' ? '/auth' : (newView === 'landing' ? '/' : `/${newView}`);
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path);
     }
@@ -537,11 +832,13 @@ export default function App() {
             imageUrl: item.imageUrl || item.frontImageUrl
           }));
           setPreGeneratedCollection(mapped);
-          setCollectedDinos(prev => {
-            const newNames = new Set(mapped.map((d: any) => d.stats.name.toLowerCase()));
-            const existingFiltered = prev.filter(d => !newNames.has(d.stats.name.toLowerCase()));
-            return [...mapped, ...existingFiltered];
-          });
+          // Only auto-fill if we have userData, otherwise start empty
+          if (userData?.uid) {
+             const collectedNames = new Set(userData.collectedSpecimens.map(s => s.toLowerCase()));
+             setCollectedDinos(mapped.filter(d => collectedNames.has(d.stats.name.toLowerCase())));
+          } else {
+             setCollectedDinos([]);
+          }
         }
       } catch (e) {}
     };
@@ -552,6 +849,13 @@ export default function App() {
     const searchTerm = dinoName || query;
     if (!searchTerm.trim() || loading) return;
 
+    // Trigger Map Flight if on landing page
+    if (view === 'landing' && !isMapAnimating && !dinoName) {
+      setTargetDino(searchTerm);
+      setIsMapAnimating(true);
+      return; // Wait for onFocusComplete to call handleSearch again
+    }
+
     setCurrentDinoName(searchTerm);
     navigate('card');
     setLoading(true);
@@ -561,6 +865,8 @@ export default function App() {
     setTempStats(null);
     setIsFlipped(false);
     setTypingFinished(false);
+    setIsMapAnimating(false);
+    setTargetDino(null);
 
     try {
       const preGen = preGeneratedCollection.find(d => 
@@ -577,6 +883,16 @@ export default function App() {
         setTempStats(readyPreGen.stats);
         setCardData(readyPreGen);
         setLoading(false);
+
+        // Update permanent collection in Firebase if logged in
+        if (userData?.uid && !userData.collectedSpecimens.some(name => name.toLowerCase() === readyPreGen.stats.name.toLowerCase())) {
+          collectSpecimen(userData.uid, readyPreGen.stats.name);
+        } else if (!userData) {
+          // If guest, just update local state session-only
+          if (!collectedDinos.some(d => d.stats.name.toLowerCase() === readyPreGen.stats.name.toLowerCase())) {
+            setCollectedDinos(prev => [readyPreGen, ...prev]);
+          }
+        }
         
         if (!readyPreGen.backImageUrl) {
           (async () => {
@@ -586,18 +902,16 @@ export default function App() {
               const backImageUrl = await generateDinoImage(readyPreGen.stats, 'back', commonRef);
               const updatedCard = { ...readyPreGen, backImageUrl };
               setCardData(updatedCard);
-              setCollectedDinos(prev => {
-                const filtered = prev.filter(d => d.stats.name.toLowerCase() !== updatedCard.stats.name.toLowerCase());
-                return [updatedCard, ...filtered];
-              });
+              if (!userData) {
+                setCollectedDinos(prev => {
+                  const filtered = prev.filter(d => d.stats.name.toLowerCase() !== updatedCard.stats.name.toLowerCase());
+                  return [updatedCard, ...filtered];
+                });
+              }
             } catch (e) {
               console.error("Failed to generate back image on-the-fly", e);
             }
           })();
-        }
-
-        if (!collectedDinos.some(d => d.stats.name.toLowerCase() === readyPreGen.stats.name.toLowerCase())) {
-          setCollectedDinos(prev => [readyPreGen, ...prev]);
         }
         return;
       }
@@ -649,78 +963,151 @@ export default function App() {
 
 
   const [currentDinoName, setCurrentDinoName] = useState('');
+  const [hoveredDino, setHoveredDino] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-black selection:bg-white selection:text-black">
 
       <AnimatePresence mode="wait">
-        {view === 'landing' ? (
+        {view === 'auth' ? (
+          <AuthPage key="auth" logo={logo} onLogin={handleGoogleLogin} />
+        ) : view === 'landing' ? (
           <motion.main
             key="landing"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="relative w-full min-h-screen flex flex-col items-center px-5 pt-5 pb-12 md:p-12 overflow-y-auto bg-black"
+            className="relative w-full h-screen flex flex-col items-start overflow-hidden bg-black"
           >
             {/* Background Hand Icon Removed */}
+ 
+            <div className="w-full h-full flex flex-col lg:flex-row items-start overflow-hidden">
+              {/* Left Column - Scrollable Panel */}
+              <div className="w-full lg:w-[480px] h-full shrink-0 overflow-y-auto px-8 pt-12 pb-12 border-r border-white/5 scrollbar-hide">
+                <div className="space-y-2 mb-2">
+                  <div className="flex items-center gap-1 md:gap-2">
+                    <h1 className="text-5xl md:text-7xl font-londrina font-black uppercase tracking-normal md:tracking-widest text-white">
+                      dinodex
+                    </h1>
+                    <img src={logo} alt="DinoDex Logo" className="w-[70px] md:w-[100px] h-auto object-contain" />
+                  </div>
+                </div>
 
-            <div className="w-full max-w-[600px] flex flex-col items-start mt-4">
-              <div className="space-y-2 mb-6">
-                <div className="flex items-center gap-1 md:gap-2">
-                  <h1 className="text-6xl md:text-8xl font-londrina font-black uppercase tracking-normal md:tracking-widest text-white">
-                    dinodex
-                  </h1>
-                  <img src={logo} alt="DinoDex Logo" className="w-[90px] md:w-[130px] h-auto object-contain" />
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 mb-10 group cursor-pointer" onClick={handleLogout}>
+                  Welcome back {userData?.displayName?.split(' ')[0].toUpperCase() || 'VAMSI'}, ready to catch some dinos today?
+                  <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-white">[LOGOUT]</span>
+                </p>
+                
+                {/* Collection Chips */}
+                <div className="flex flex-wrap gap-4 mb-6">
+                  <button 
+                    onClick={() => navigate('gallery')}
+                    className="px-4 py-2 bg-white text-black font-mono text-xs uppercase tracking-widest hover:bg-zinc-200 transition-colors"
+                  >
+                    {collectedDinos.length} dinos collected
+                  </button>
+                  <div className="px-4 py-2 border border-white/20 text-white/40 font-mono text-xs uppercase tracking-widest cursor-default">
+                    {Math.max(0, 101 - collectedDinos.length)} to go
+                  </div>
+
+                  <div className="relative">
+                    <button 
+                      onClick={() => setIsActionsOpen(!isActionsOpen)}
+                      className="flex items-center gap-2 px-4 py-2 border border-white text-white font-mono text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all"
+                    >
+                      Actions
+                      <ChevronDown className={`w-3 h-3 transition-transform ${isActionsOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    <AnimatePresence>
+                      {isActionsOpen && (
+                        <motion.div 
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          className="absolute left-0 top-full mt-2 w-48 bg-black border border-white z-50 shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]"
+                        >
+                          <button 
+                            onClick={() => {
+                              setIsActionsOpen(false);
+                              handleLogout();
+                            }}
+                            className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-white hover:text-black transition-colors group"
+                          >
+                            <span className="font-mono text-[10px] uppercase tracking-widest">Logout</span>
+                            <LogOut className="w-3 h-3 opacity-50 group-hover:opacity-100" />
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+                {/* Search Box */}
+                <div className="w-full mb-6">
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                    placeholder="SEARCH DINOSAURS..."
+                    className="w-full h-[64px] bg-black border border-white text-white px-6 focus:outline-none placeholder:text-zinc-600 uppercase tracking-widest"
+                    style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+                  />
+                </div>
+ 
+                {/* Egg Gallery Grid */}
+                <div className="w-full mt-10">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {ALL_DINO_NAMES
+                      .filter(name => name.toLowerCase().includes(query.toLowerCase()))
+                      .map((name) => {
+                        const dino = preGeneratedCollection.find(d => d.stats.name.toLowerCase() === name.toLowerCase());
+                        return (
+                          <EggCard 
+                            key={name}
+                            name={name}
+                            dino={dino}
+                            isCollected={collectedDinos.some(d => d.stats.name.toLowerCase() === name.toLowerCase())}
+                            onSelect={(n) => {
+                              setTargetDino(n);
+                              setIsMapAnimating(true);
+                            }}
+                            onHover={setHoveredDino}
+                          />
+                        );
+                    })}
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="w-full mt-24 pt-8 border-t border-white/5 flex justify-between items-center opacity-20">
+                  <p className="font-mono text-[8px] text-white tracking-widest uppercase">System: v1.0.4-LITE</p>
+                  <p className="font-mono text-[8px] text-white tracking-widest uppercase">© 2026 DINODEX REPOSITORY</p>
                 </div>
               </div>
-              {/* Search Box */}
-              <div className="w-full mb-6">
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                  placeholder="SEARCH DINOSAURS..."
-                  className="w-full h-[64px] bg-black border border-white text-white px-6 focus:outline-none placeholder:text-zinc-600 uppercase tracking-widest"
-                  style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+
+              {/* Right Column - Map Panel */}
+              <div className="hidden lg:flex flex-1 w-full h-full relative">
+                <DinoMap 
+                  activeDinoName={hoveredDino} 
+                  focusedDinoName={targetDino}
+                  focusedDinoLocation={targetDino ? preGeneratedCollection.find(d => d.stats.name.toLowerCase() === targetDino.toLowerCase())?.stats.location || null : null}
+                  collectedNames={new Set(collectedDinos.map(d => d.stats.name.toLowerCase()))}
+                  onMarkerClick={handleSearch} 
+                  onFocusComplete={() => handleSearch(targetDino || undefined)}
                 />
               </div>
-              {/* Collection Chips */}
-              <div className="flex gap-4 mb-6">
-                <button 
-                  onClick={() => navigate('gallery')}
-                  className="px-4 py-2 bg-white text-black font-mono text-xs uppercase tracking-widest hover:bg-zinc-200 transition-colors"
-                >
-                  {collectedDinos.length} dinos collected
-                </button>
-                <div className="px-4 py-2 border border-white/20 text-white/40 font-mono text-xs uppercase tracking-widest cursor-default">
-                  {Math.max(0, 64 - collectedDinos.length)} more to go
-                </div>
-              </div>
 
-              {/* Egg Gallery Grid */}
-              <div className="w-full mt-10">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-20">
-                  {ALL_DINO_NAMES
-                    .filter(name => name.toLowerCase().includes(query.toLowerCase()))
-                    .map((name) => {
-                      const dino = preGeneratedCollection.find(d => d.stats.name.toLowerCase() === name.toLowerCase());
-                      return (
-                        <EggCard 
-                          key={name}
-                          name={name}
-                          dino={dino}
-                          onSelect={handleSearch}
-                        />
-                      );
-                  })}
-                </div>
-              </div>
-
-              {/* Footer */}
-              <div className="w-full mt-24 pt-8 border-t border-white/5 flex justify-between items-center opacity-20">
-                <p className="font-mono text-[8px] text-white tracking-widest uppercase">System: v1.0.4-LITE</p>
-                <p className="font-mono text-[8px] text-white tracking-widest uppercase">© 2026 DINODEX REPOSITORY</p>
+              <div className="lg:hidden w-full h-[300px] shrink-0 border-t border-white/5">
+                <DinoMap 
+                  activeDinoName={hoveredDino} 
+                  focusedDinoName={targetDino}
+                  focusedDinoLocation={targetDino ? preGeneratedCollection.find(d => d.stats.name.toLowerCase() === targetDino.toLowerCase())?.stats.location || null : null}
+                  collectedNames={new Set(collectedDinos.map(d => d.stats.name.toLowerCase()))}
+                  onMarkerClick={handleSearch} 
+                  onFocusComplete={() => handleSearch(targetDino || undefined)}
+                />
               </div>
             </div>
           </motion.main>

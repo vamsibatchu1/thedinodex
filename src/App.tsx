@@ -748,11 +748,11 @@ export default function App() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [view, setView] = useState<'auth' | 'landing' | 'card' | 'gallery' | 'admin'>(() => {
     const path = window.location.pathname.replace(/\/$/, '') || '/';
-    if (path === '/auth') return 'auth';
-    if (path === '/admin') return 'admin';
-    if (path === '/collection' || path === '/gallery') return 'gallery';
+    if (path === '/home') return 'landing';
+    if (path === '/my-collection') return 'gallery';
     if (path === '/card') return 'card';
-    return 'auth'; // Default to auth
+    if (path === '/admin') return 'admin';
+    return 'auth'; // Default to base login
   });
   const [typingFinished, setTypingFinished] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -784,14 +784,22 @@ export default function App() {
     }
   }, [userData?.uid, preGeneratedCollection]);
 
+  // Handle automatic redirection to Home if already logged in on base URL
+  useEffect(() => {
+    if (userData && window.location.pathname === '/') {
+      navigate('landing');
+    }
+  }, [userData]);
+
   // Sync state with URL
   useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname.replace(/\/$/, '') || '/';
-      if (path === '/admin') setView('admin');
-      else if (path === '/collection' || path === '/gallery') setView('gallery');
+      if (path === '/home') setView('landing');
+      else if (path === '/my-collection') setView('gallery');
       else if (path === '/card') setView('card');
-      else setView('landing');
+      else if (path === '/admin') setView('admin');
+      else setView('auth');
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -820,7 +828,12 @@ export default function App() {
 
   const navigate = (newView: 'auth' | 'landing' | 'card' | 'gallery' | 'admin') => {
     setView(newView);
-    const path = newView === 'auth' ? '/auth' : (newView === 'landing' ? '/' : `/${newView}`);
+    let path = '/';
+    if (newView === 'landing') path = '/home';
+    else if (newView === 'gallery') path = '/my-collection';
+    else if (newView === 'card') path = '/card';
+    else if (newView === 'admin') path = '/admin';
+    
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path);
     }

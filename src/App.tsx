@@ -129,7 +129,7 @@ const CardFront = ({ stats, imageUrl }: { stats: DinoStats; imageUrl: string }) 
 
 const CardBack = ({ stats, imageUrl }: { stats: DinoStats; imageUrl?: string }) => {
   return (
-    <div className="w-full h-full relative overflow-hidden bg-black flex flex-col items-center justify-center p-8 border border-white/10">
+    <div className="w-full h-full relative overflow-hidden bg-black flex flex-col items-center justify-center p-8">
       {imageUrl ? (
         <img 
           src={imageUrl} 
